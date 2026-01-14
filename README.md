@@ -32,7 +32,8 @@ In this work, ChemTSv2 is extended by:
 The main molecular generation workflow is executed through the ChemTSv2 interface.
 
 1. Install ChemTSv2 following the official instructions.
-2. Clone this repository and place it under the ChemTSv2 root directory,
-   or add its path to the PYTHONPATH.
-3. Copy a configuration file from `configs/` to the ChemTSv2 configuration directory.
-4. Run ChemTSv2 with the selected configuration file.
+2. Clone this repository and copy the provided files into the corresponding directories of your ChemTSv2 installation (e.g., reward module into ChemTSv2 reward directory and configuration YAML into ChemTSv2 config directory).
+3. Run ChemTSv2 with the selected configuration file.
+
+# License
+This package is distributed under the MIT License.
