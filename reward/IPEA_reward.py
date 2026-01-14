@@ -9,8 +9,7 @@ from chemtsv2.reward import Reward
 class IPEA_reward(Reward):
     def get_objective_functions(conf):
         def IPEA_dip_gap(mol):
-
-            output_dir = './result/IPEA_dip_gap_150w_200'
+            output_dir = './result/IPEA_dip_gap_150w_200_26'
             os.makedirs(output_dir, exist_ok=True)
 
             XYZ_input = os.path.join(output_dir, f"InputMol{conf['gid']}.xyz")
@@ -47,8 +46,8 @@ class IPEA_reward(Reward):
             os.system(xtb_opt_cmd)
 
             xtb_opt_xyz = "xtbopt.xyz"
-            timeout = 30
-            interval = 1
+            timeout = 30  
+            interval = 1  
             elapsed_time = 0
             while not os.path.exists(xtb_opt_xyz) and elapsed_time < timeout:
                 time.sleep(interval)
@@ -66,7 +65,7 @@ class IPEA_reward(Reward):
                 xtb_vipea_cmd = f"xtb {new_filename} --vipea > {xtb_vipea_log}"
                 os.system(xtb_vipea_cmd)
 
-                vipea_timeout = 30
+                vipea_timeout = 30 
                 vipea_elapsed_time = 0
                 while not os.path.exists(xtb_vipea_log) and vipea_elapsed_time < vipea_timeout:
                     time.sleep(interval)
@@ -112,9 +111,10 @@ class IPEA_reward(Reward):
                 with open(xtb_dipole_log, 'r') as file:
                     for line in file:
                         if "molecular dipole:" in line:
-                            molecular_dipole_found = True
+                            molecular_dipole_found = True 
                         elif molecular_dipole_found and "full:" in line:
-                            dipole_result = float(line.split()[-1])
+                            dipole_result = float(line.split()[-1])  
+                            break  
 
             stda_log = os.path.join(output_dir, f"stda.txt")
             if os.path.exists(stda_log):
@@ -124,7 +124,7 @@ class IPEA_reward(Reward):
                             next_line = file.readline().strip()
                             columns = next_line.split()
                             optical_gap_result = float(columns[1])
-                            break
+                            break  
             if ip_result is None or ea_result is None or dipole_result is None or optical_gap_result is None:
                 return [float('nan'), float('nan'), float('nan'), float('nan'), float('nan')]
 
@@ -137,10 +137,9 @@ class IPEA_reward(Reward):
         if any(map(lambda x: x != x, [HLGap, IP, EA, dipole, optical_gap])):  # Check for NaN
             return -1
 
-        IP_normalized = 1 / (1 + math.exp(-0.3*(IP - 8)))
-        EA_normalized = 1 / (1 + math.exp(-0.3*(EA - 2)))
+        IP_normalized = 1 / (1 + math.exp(-0.3*(IP - 8)))  # 对应f(x) = 1 / (1 + e^{-(x - 7)})
+        EA_normalized = 1 / (1 + math.exp(-0.3*(EA - 2)))  # 对应f(x) = 1 / (1 + e^{-(x - 1.5)})
 
-        reward = (0.5 * IP_normalized) + (0.5 * EA_normalized)
+        reward = (0.5 * IP_normalized) + (0.5 * EA_normalized) 
 
         return reward
-    
