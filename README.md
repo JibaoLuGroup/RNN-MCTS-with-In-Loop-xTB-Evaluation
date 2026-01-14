@@ -16,3 +16,23 @@ In this work, ChemTSv2 is extended by:
   loop (in-loop evaluation),
 - Designing a customized reward function targeting IP/EA optimization,
 - Training a task-specific RNN model on polyimide-related molecular data set.
+# Requirements
+- Python >= 3.8
+- python: 3.11
+- rdkit: 2023.9.1
+- tensorflow: 2.14.1
+- pyyaml
+- pandas: 2.1.3
+- joblib
+- ChemTSv2
+- xTB (GFN2-xTB, IPEA-xTB)
+- NumPy
+- PyYAML
+# Usage
+The main molecular generation workflow is executed through the ChemTSv2 interface.
+
+1. Install ChemTSv2 following the official instructions.
+2. Clone this repository and place it under the ChemTSv2 root directory,
+   or add its path to the PYTHONPATH.
+3. Copy a configuration file from `configs/` to the ChemTSv2 configuration directory.
+4. Run ChemTSv2 with the selected configuration file.
